@@ -53,7 +53,7 @@ qdrant.create_payload_index(
 )
 ```
 
-This drops filter latency from ~500ms to ~50ms on collections with 10k+ points. Without indexes, every search query that filters on `is_active=true` scans all payloads.[10]
+This drops filter latency from ~500ms to ~50ms on collections with 10k+ points. Without indexes, every search query that filters on `is_active=true` scans all payloads.
 
 ### State Consistency & Atomicity
 
@@ -65,11 +65,11 @@ Recovery example: if a rollback to commit `abc123` writes to SQLite but crashes 
 
 ### Storage Tradeoffs & Garbage Collection
 
-The biggest downside of this design is storage cost. Every commit stores full vectors for all modified points, even if embeddings barely changed. After three major revisions, you're paying 3× storage and index build times scale with total point count, not just active points.[11]
+The biggest downside of this design is storage cost. Every commit stores full vectors for all modified points, even if embeddings barely changed. After three major revisions, you're paying 3× storage and index build times scale with total point count, not just active points.
 
 Mitigations I'm exploring:
 - **Delta policy**: only store a new version when embedding changed beyond a cosine similarity threshold (e.g., 0.02)
-- **Deduplication**: hash embeddings and store identical vectors only once, with metadata pointing to the shared vector[11]
+- **Deduplication**: hash embeddings and store identical vectors only once, with metadata pointing to the shared vector
 - **Garbage collection**: `clamp gc --prune-age=30d` deletes inactive points older than 30 days or offloads them to cold storage
 
 Right now inactive points accumulate indefinitely, which is fine for small KBs but breaks down at scale. A production system needs automated GC with configurable retention policies.
@@ -88,7 +88,7 @@ clamp branch experiment-v2
 clamp merge experiment-v2
 ```
 
-The semantics of `checkout`/`rollback`: instead of flipping `is_active` flags on every point, I'm moving toward a per-group `active_commit` pointer that queries consult. This is cheaper at read time because you filter against a single commit ID rather than scanning every point's `is_active` field.[10]
+The semantics of `checkout`/`rollback`: instead of flipping `is_active` flags on every point, I'm moving toward a per-group `active_commit` pointer that queries consult. This is cheaper at read time because you filter against a single commit ID rather than scanning every point's `is_active` field.
 
 ## Operational Considerations
 
@@ -111,9 +111,9 @@ Manage Qdrant API keys carefully and back up the SQLite commit DB regularly. The
 
 ## What I Learned
 
-Building Clamp taught me that **version control is fundamentally about tracking intent, not just changes**. Git stores commit messages and diffs because code is text. But vectors don't diff meaningfully – what matters is knowing *why* a version exists and being able to restore that decision point.[12]
+Building Clamp taught me that **version control is fundamentally about tracking intent, not just changes**. Git stores commit messages and diffs because code is text. But vectors don't diff meaningfully – what matters is knowing *why* a version exists and being able to restore that decision point.
 
-I also learned that vector databases need better primitives for versioning. Qdrant's metadata filtering is powerful, but it's not designed for temporal queries or complex state transitions. Production RAG systems need first-class versioning support, and the current generation of vector databases treats it as an afterthought.[10][13]
+I also learned that vector databases need better primitives for versioning. Qdrant's metadata filtering is powerful, but it's not designed for temporal queries or complex state transitions. Production RAG systems need first-class versioning support, and the current generation of vector databases treats it as an afterthought.
 
 ## Next Steps
 
