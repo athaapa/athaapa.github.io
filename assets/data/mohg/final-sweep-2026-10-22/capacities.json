@@ -1,0 +1,29 @@
+[
+  {
+    "factor": 1,
+    "voices": 61,
+    "pool_limited": false,
+    "blocks": 15000,
+    "overruns": 0,
+    "mean_us": 676.35,
+    "maximum_run_p99_us": 739.46
+  },
+  {
+    "factor": 2,
+    "voices": 46,
+    "pool_limited": false,
+    "blocks": 15000,
+    "overruns": 0,
+    "mean_us": 678.1,
+    "maximum_run_p99_us": 740.04
+  },
+  {
+    "factor": 4,
+    "voices": 24,
+    "pool_limited": false,
+    "blocks": 15000,
+    "overruns": 0,
+    "mean_us": 544.26,
+    "maximum_run_p99_us": 583.83
+  }
+]

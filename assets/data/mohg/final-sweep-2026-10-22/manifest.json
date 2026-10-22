@@ -1,0 +1,22 @@
+{
+  "commit": "ed7293a84d9044f143beaea6afada5b67abb3816",
+  "odin": "/opt/homebrew/bin/odin version dev-2026-09:a2fb372b7",
+  "machine": "Apple M4",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "build": "odin build bench -o:speed -debug -out:build/bench",
+  "executable_sha256": "d928afdb5054a32eecb093fb4b699ab630acaa793171691be38bf98661beea8a",
+  "sample_rate_hz": 48000,
+  "frames": 64,
+  "unison": 16,
+  "waveform": "saw",
+  "cutoff_hz": 15000,
+  "resonance": 0.9,
+  "drive": 1,
+  "blocks_per_run": 5000,
+  "warmup_blocks_per_run": 100,
+  "budget_us": 1333.3333333333333,
+  "voice_pool_limit": 128,
+  "capacity_protocol": "Coarse counts 8,16,32,48,64,80,96,112,128 at each factor; refine individual counts above the largest passing coarse point up to the next coarse point; confirm candidate in two more runs. Any observed overrun disqualifies that candidate. Report the largest tested count passing all three runs, not a bound.",
+  "started_at_local": "2026-10-22T12:07:03-0700",
+  "finished_at_local": "2026-10-22T12:15:43-0700"
+}
